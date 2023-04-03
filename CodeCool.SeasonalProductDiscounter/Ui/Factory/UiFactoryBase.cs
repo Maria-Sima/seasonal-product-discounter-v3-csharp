@@ -6,11 +6,8 @@ public abstract class UiFactoryBase
 {
     protected readonly IAuthenticationService AuthenticationService;
 
-    protected UiFactoryBase(IAuthenticationService authenticationService)
-    {
-        AuthenticationService = authenticationService;
-    }
-
+  
+    public abstract bool RequiresAuthentication { get; }
     public abstract string UiName { get; }
     public abstract UiBase Create();
 }

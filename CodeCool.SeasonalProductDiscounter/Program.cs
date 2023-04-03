@@ -14,12 +14,12 @@ var productStatistics = new ProductStatistics(productBrowser);
 var discountProvider = new DiscountProvider();
 var discounterService = new DiscounterService(discountProvider);
 
-IOfferService offerService = null;
+IOfferService offerService = new OfferService(discountProvider,productProvider);
 
-IAuthenticationService authenticationService = null;
-UiFactoryBase productsUiFactory = new ProductsUiFactory(authenticationService, productBrowser);
-UiFactoryBase statisticsUiFactory = null;
-UiFactoryBase offersUiFactory = null;
+IAuthenticationService authenticationService = new AuthenticationService();
+UiFactoryBase productsUiFactory = new ProductsUiFactory( productBrowser);
+UiFactoryBase statisticsUiFactory =new StatisticUiFactory(productStatistics);
+UiFactoryBase offersUiFactory = new OfferUiFactory(offerService);
 
 SortedList<int, UiFactoryBase> factories = new SortedList<int, UiFactoryBase>
 {
@@ -28,15 +28,17 @@ SortedList<int, UiFactoryBase> factories = new SortedList<int, UiFactoryBase>
     { 3, offersUiFactory }
 };
 
-var uiSelector = new UiSelector(factories);
+var uiSelector = new UiSelector(factories,authenticationService);
 
 UiBase ui = uiSelector.Select();
 
-if (ui.Authenticate())
+
+if (ui != null)
 {
     ui.DisplayTitle();
     ui.Run();
 }
+
 
 Console.WriteLine("Press any key to exit.");
 Console.ReadKey();

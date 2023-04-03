@@ -7,11 +7,11 @@ public class ProductsUiFactory : UiFactoryBase
 {
     private readonly ProductBrowser _productBrowser;
 
-    public ProductsUiFactory(IAuthenticationService authenticationService, ProductBrowser productBrowser) : base(authenticationService)
+    public ProductsUiFactory( ProductBrowser productBrowser) : base()
     {
         _productBrowser = productBrowser;
     }
-
+    public override bool RequiresAuthentication => true;
 
     public override string UiName => "Products";
 

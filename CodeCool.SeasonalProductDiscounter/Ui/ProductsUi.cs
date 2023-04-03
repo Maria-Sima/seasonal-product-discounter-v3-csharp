@@ -8,10 +8,12 @@ public class ProductsUi : UiBase
 {
     private readonly IProductBrowser _productBrowser;
 
-    public ProductsUi(IAuthenticationService authenticationService, IProductBrowser productBrowser, string title) : base(authenticationService, title)
+    public ProductsUi(IAuthenticationService authenticationService, IProductBrowser productBrowser, string title) : base( title)
     {
         _productBrowser = productBrowser;
     }
+
+    public override bool RequiresAuthentication => true;
 
     public override void Run()
     {

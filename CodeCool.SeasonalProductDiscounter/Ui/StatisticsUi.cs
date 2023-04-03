@@ -1,17 +1,19 @@
-﻿using CodeCool.SeasonalProductDiscounter.Service.Products.Statistics;
+﻿using CodeCool.SeasonalProductDiscounter.Service.Products.Browser;
+using CodeCool.SeasonalProductDiscounter.Service.Products.Statistics;
+using CodeCool.SeasonalProductDiscounter.Service.Users;
 
 namespace CodeCool.SeasonalProductDiscounter.Ui;
 
-public class StatisticsUi
+public class StatisticsUi:UiBase
 {
     private readonly IProductStatistics _productStatistics;
 
-    public StatisticsUi(IProductStatistics productStatistics)
+    public StatisticsUi (IAuthenticationService authenticationService, IProductStatistics productStatistics, string title) : base( title)
     {
         _productStatistics = productStatistics;
     }
-
-    public void Run()
+    public override bool RequiresAuthentication => true;
+    public override void Run()
     {
         Console.WriteLine($"Total products: {_productStatistics.TotalProducts()}");
         Console.WriteLine($"Average price of products: {_productStatistics.GetAveragePrice()}");
